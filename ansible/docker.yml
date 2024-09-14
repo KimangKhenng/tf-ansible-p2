@@ -1,0 +1,29 @@
+- name: Up Containers
+  hosts: project-2-vm
+  become: yes
+  tasks:
+    - name: Clone repo
+      ansible.builtin.git:
+        repo: https://github.com/tfd-ed/tw-clone-api.git
+        dest: "{{ ansible_env.HOME }}/tw-clone-api"
+        single_branch: yes
+        version: main
+    - name: Copy environment file
+      copy:
+        src: "{{ ansible_env.HOME }}/tw-clone-api/.template.env"
+        dest: "{{ ansible_env.HOME }}/tw-clone-api/.env"
+        remote_src: yes
+    - name: Start Docker Compose
+      ansible.builtin.command: docker compose up -d
+      args:
+        chdir: "{{ ansible_env.HOME }}/tw-clone-api"
+
+    - name: Enable firewall
+      ufw:
+        state: enabled
+
+    - name: Allow port 4000 through the firewall
+      ufw:
+        rule: allow
+        port: 4000
+        proto: tcp
