@@ -19,7 +19,7 @@ provider "digitalocean" {
 # Create a new SSH key
 resource "digitalocean_ssh_key" "project_2_key" {
   name       = "project_2_key"
-  public_key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFCuXB0GcyCJ/3VZd/xbbTeg8k54n5nLgTrXTxaJWuMK kimang@KIMs-MacBook-Pro.local"
+  public_key = "public-key"
 }
 
 # Create a new Web Droplet in the nyc2 region
